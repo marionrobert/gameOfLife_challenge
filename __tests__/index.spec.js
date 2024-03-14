@@ -1,7 +1,7 @@
 const { TestEnvironment } = require("jest-environment-jsdom");
 
 require("../index");
-const { isAlive, generate, regenerate, countLivingNeigbhours } = window.game;
+const { isAlive, generate, regenerate, countLivingNeigbhours, drawGrid } = window.game;
 
 describe("GAME OF LIFE", () => {
   describe("-- isAlive algorithm --", () => {
@@ -65,6 +65,36 @@ describe("GAME OF LIFE", () => {
     test("should return all live cells", () => {
       const cells = [1, 1, 1, 0];
       expect(regenerate(cells)).toEqual([1, 1, 1, 1]);
+    })
+  });
+
+  describe("-- browser grid --", () => {
+    // test("should display 1 dead cell", () => {
+    //   document.body.innerHTML = '<div id="grid"></div>';
+    //   drawGrid([0]);
+    //   expect(document.querySelectorAll(".container").length).toEqual(1);
+    //   expect(document.querySelectorAll(".cell").length).toEqual(1);
+    //   expect(document.querySelectorAll(".dead").length).toEqual(1);
+    // });
+    // test("should display 1 alive cell", () => {
+    //   document.body.innerHTML = '<div id="grid"></div>';
+    //   drawGrid([1]);
+    //   expect(document.querySelectorAll(".container").length).toEqual(1);
+    //   expect(document.querySelectorAll(".cell").length).toEqual(1);
+    //   expect(document.querySelectorAll(".live").length).toEqual(1);
+    // });
+    test("should display living and dead cells", () => {
+      document.body.innerHTML = '<div id="grid"></div>';
+      drawGrid([0, 0, 1, 1]);
+      expect(document.querySelectorAll(".row").length).toEqual(2);
+      expect(document.querySelectorAll(".cell").length).toEqual(4);
+      expect(document.querySelectorAll(".live").length).toEqual(2);
+      expect(document.querySelectorAll(".dead").length).toEqual(2);
+      drawGrid([1, 1, 0, 0]);
+      expect(document.querySelectorAll(".row").length).toEqual(2);
+      expect(document.querySelectorAll(".cell").length).toEqual(4);
+      expect(document.querySelectorAll(".live").length).toEqual(2);
+      expect(document.querySelectorAll(".dead").length).toEqual(2);
     })
   })
 });
