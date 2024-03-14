@@ -35,8 +35,21 @@ describe("GAME OF LIFE", () => {
     });
     test("should count 2 neighbours", () => {
       expect(countLivingNeigbhours([1, 1, 1, 0], 0)).toEqual(2);
-    })
-  })
+    });
+    test("should count 2 neighbours (bis)", () => {
+      expect(countLivingNeigbhours([1, 1, 1, 0], 1)).toEqual(2);
+    });
+    test("should count 2 neighbours (ter)", () => {
+      expect(countLivingNeigbhours([1, 1, 1, 0], 2)).toEqual(2);
+    });
+    test("should count 3 neighbours", () => {
+      expect(countLivingNeigbhours([1, 1, 1, 0], 3)).toEqual(3);
+    });
+    test("should count 3 neighbours", () => {
+      expect(countLivingNeigbhours([1, 1, 1, 0, 0, 0, 0, 0, 0], 4)).toEqual(3);
+    });
+
+  });
 
   describe("-- regenerate function --", () => {
     test("should not update dead cells", () => {
