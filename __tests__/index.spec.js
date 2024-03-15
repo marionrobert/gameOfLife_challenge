@@ -1,7 +1,18 @@
 const { TestEnvironment } = require("jest-environment-jsdom");
 
 require("../index");
-const { isAlive, generate, regenerate, countLivingNeigbhours, drawGrid, attachGridEventHandler, getCellsFromDom } = window.game;
+const {
+  isAlive,
+  generate,
+  regenerate,
+  countLivingNeigbhours,
+  drawGrid,
+  attachGridEventHandler,
+  getCellsFromDom,
+  start
+} = window.game;
+
+jest.useFakeTimers();
 
 describe("GAME OF LIFE", () => {
   describe("-- isAlive algorithm --", () => {
@@ -100,7 +111,7 @@ describe("GAME OF LIFE", () => {
 
   describe("-- event handler for grid --", () => {
     test("click on cell should toggle live/dead", () => {
-      document.body.innerHTML =  '<div id="grid"></div>';
+      document.body.innerHTML = '<div id="grid"></div>';
       drawGrid([0]);
       attachGridEventHandler();
       expect(document.querySelectorAll(".live").length).toEqual(0);
@@ -115,12 +126,28 @@ describe("GAME OF LIFE", () => {
     });
   });
 
-  describe("-- get cells from dom--", () => {
+  describe("-- get cells from dom --", () => {
     test("should get living and dead celles from dom", () => {
-      document.body.innerHTML =  '<div id="grid"></div>';
+      document.body.innerHTML = '<div id="grid"></div>';
       const cells = [0, 0, 1, 1];
       drawGrid(cells);
       expect(getCellsFromDom()).toEqual(cells)
+    });
+  });
+
+  describe("-- start function --", () => {
+    test("start function", () => {
+      document.body.innerHTML = '<div id="grid"></div>';
+      const setIntervalSpy = jest.spyOn(global, 'setInterval');
+      const getCellsFromDomSpy = jest.spyOn(game, "getCellsFromDom");
+      const regenerateSpy = jest.spyOn(game, "regenerate");
+      const drawGridSpy = jest.spyOn(game, "drawGrid");
+      game.start();
+      jest.runOnlyPendingTimers();
+      expect(setIntervalSpy).toHaveBeenCalled();
+      expect(getCellsFromDomSpy).toHaveBeenCalled();
+      expect(regenerateSpy).toHaveBeenCalled();
+      expect(drawGridSpy).toHaveBeenCalled();
     });
   });
 });

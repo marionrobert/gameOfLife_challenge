@@ -57,10 +57,17 @@ const attachGridEventHandler = () => {
   });
 };
 
-const getCellsFromDom = () => {
-  Array.from(document.querySelectorAll(".cell"))
-  .map(cell => cell.className.includes("dead") ? 0 : 1);
-};
+const getCellsFromDom = () =>
+  Array.from(document.querySelectorAll(".cell")).map(cell => cell.className.includes("dead") ? 0 : 1)
+;
+
+const start = () => {
+  let generation = game.getCellsFromDom();
+  setInterval(() => {
+    generation = game.regenerate(generation);
+    game.drawGrid(generation);
+  }, 500);
+}
 
 window.game = {
   isAlive,
@@ -69,5 +76,6 @@ window.game = {
   countLivingNeigbhours,
   drawGrid,
   attachGridEventHandler,
-  getCellsFromDom
+  getCellsFromDom,
+  start
 };
