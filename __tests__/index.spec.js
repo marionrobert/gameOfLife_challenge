@@ -1,7 +1,7 @@
 const { TestEnvironment } = require("jest-environment-jsdom");
 
 require("../index");
-const { isAlive, generate, regenerate, countLivingNeigbhours, drawGrid } = window.game;
+const { isAlive, generate, regenerate, countLivingNeigbhours, drawGrid, attachGridEventHandler } = window.game;
 
 describe("GAME OF LIFE", () => {
   describe("-- isAlive algorithm --", () => {
@@ -96,5 +96,22 @@ describe("GAME OF LIFE", () => {
       expect(document.querySelectorAll(".live").length).toEqual(2);
       expect(document.querySelectorAll(".dead").length).toEqual(2);
     })
-  })
+  });
+
+  describe("-- event handler for grid --", () => {
+    test("click on cell should toggle live/dead", () => {
+      document.body.innerHTML =  '<div id="grid"></div>';
+      drawGrid([0]);
+      attachGridEventHandler();
+      expect(document.querySelectorAll(".live").length).toEqual(0);
+      expect(document.querySelectorAll(".dead").length).toEqual(1);
+      const cell = document.querySelectorAll(".dead")[0];
+      cell.click();
+      expect(document.querySelectorAll(".live").length).toEqual(1);
+      expect(document.querySelectorAll(".dead").length).toEqual(0);
+      cell.click();
+      expect(document.querySelectorAll(".live").length).toEqual(0);
+      expect(document.querySelectorAll(".dead").length).toEqual(1);
+    });
+  });
 });
