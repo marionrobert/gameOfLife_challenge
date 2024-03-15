@@ -1,7 +1,7 @@
 const { TestEnvironment } = require("jest-environment-jsdom");
 
 require("../index");
-const { isAlive, generate, regenerate, countLivingNeigbhours, drawGrid, attachGridEventHandler } = window.game;
+const { isAlive, generate, regenerate, countLivingNeigbhours, drawGrid, attachGridEventHandler, getCellsFromDom } = window.game;
 
 describe("GAME OF LIFE", () => {
   describe("-- isAlive algorithm --", () => {
@@ -112,6 +112,15 @@ describe("GAME OF LIFE", () => {
       cell.click();
       expect(document.querySelectorAll(".live").length).toEqual(0);
       expect(document.querySelectorAll(".dead").length).toEqual(1);
+    });
+  });
+
+  describe("-- get cells from dom--", () => {
+    test("should get living and dead celles from dom", () => {
+      document.body.innerHTML =  '<div id="grid"></div>';
+      const cells = [0, 0, 1, 1];
+      drawGrid(cells);
+      expect(getCellsFromDom()).toEqual(cells)
     });
   });
 });
