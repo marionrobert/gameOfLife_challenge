@@ -30,6 +30,10 @@ Ce projet met en œuvre le Jeu de la Vie de Conway en utilisant les principes du
 - Les tests sont écrits en utilisant Jest. Pour exécuter les tests, exécuter `npm test` dans le terminal.
 
 
+## Vidéo de démonstration
+
+Vous pouvez regarder une démonstration du projet dans la vidéo /static/demo.mp4
+
 ### Références
 - Cours Udemy : [Test Driven Development using Javascript and Jest](https://www.udemy.com/course/test-driven-development-using-javascript-and-jest/)
 - Dépôt GitHub de Joseph Delgadillo: [tdd-fundamentals](https://github.com/roppa/tdd-fundamentals)
