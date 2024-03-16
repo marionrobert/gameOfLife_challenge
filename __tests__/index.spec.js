@@ -9,7 +9,8 @@ const {
   drawGrid,
   attachGridEventHandler,
   getCellsFromDom,
-  start
+  start,
+  stop
 } = window.game;
 
 jest.useFakeTimers();
@@ -148,6 +149,14 @@ describe("GAME OF LIFE", () => {
       expect(getCellsFromDomSpy).toHaveBeenCalled();
       expect(regenerateSpy).toHaveBeenCalled();
       expect(drawGridSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe("-- stop function --", () => {
+    test("stop should clear interval", () => {
+      const clearInterval = jest.spyOn(global, "clearInterval");
+      game.stop();
+      expect(clearInterval).toHaveBeenCalled();
     });
   });
 });
