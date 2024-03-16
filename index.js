@@ -61,13 +61,17 @@ const getCellsFromDom = () =>
   Array.from(document.querySelectorAll(".cell")).map(cell => cell.className.includes("dead") ? 0 : 1)
 ;
 
+let gameLoop;
+
 const start = () => {
   let generation = game.getCellsFromDom();
-  setInterval(() => {
+  gameLoop = setInterval(() => {
     generation = game.regenerate(generation);
     game.drawGrid(generation);
   }, 500);
 }
+
+const stop = () => clearInterval(gameLoop);
 
 window.game = {
   isAlive,
@@ -77,5 +81,6 @@ window.game = {
   drawGrid,
   attachGridEventHandler,
   getCellsFromDom,
-  start
+  start,
+  stop
 };
